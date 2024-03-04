@@ -1,6 +1,6 @@
 package ua.tonkoshkur.currency.exchange.exchange;
 
-import ua.tonkoshkur.currency.exchange.currency.Currency;
+import ua.tonkoshkur.currency.exchange.currency.dao.entity.Currency;
 
 import java.math.BigDecimal;
 

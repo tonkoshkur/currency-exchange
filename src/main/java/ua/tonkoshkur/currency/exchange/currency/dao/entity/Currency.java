@@ -1,4 +1,4 @@
-package ua.tonkoshkur.currency.exchange.currency;
+package ua.tonkoshkur.currency.exchange.currency.dao.entity;
 
 public record Currency(Integer id,
                        String name,
