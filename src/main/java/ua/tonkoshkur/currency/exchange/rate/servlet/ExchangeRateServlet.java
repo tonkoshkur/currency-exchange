@@ -8,7 +8,7 @@ import ua.tonkoshkur.currency.exchange.rate.dto.ExchangeRateDto;
 import ua.tonkoshkur.currency.exchange.rate.dto.UpdateExchangeRateRequest;
 import ua.tonkoshkur.currency.exchange.rate.service.ExchangeRateService;
 import ua.tonkoshkur.currency.exchange.rate.servlet.extractor.CurrencyCodesFromPathExtractor;
-import ua.tonkoshkur.currency.exchange.rate.servlet.mapper.RequestToUpdateExchangeRateRequestMapper;
+import ua.tonkoshkur.currency.exchange.rate.servlet.mapper.UpdateExchangeRateRequestMapper;
 import ua.tonkoshkur.currency.exchange.util.BeanFactory;
 import ua.tonkoshkur.currency.exchange.util.ResponseWriter;
 import ua.tonkoshkur.currency.exchange.util.WithPatchServlet;
@@ -19,11 +19,11 @@ import java.io.IOException;
 public class ExchangeRateServlet extends WithPatchServlet {
 
     private final ExchangeRateService exchangeRateService;
-    private final RequestToUpdateExchangeRateRequestMapper requestToUpdateRequestMapper;
+    private final UpdateExchangeRateRequestMapper updateRequestMapper;
 
     public ExchangeRateServlet() {
         this.exchangeRateService = BeanFactory.getExchangeRateService();
-        this.requestToUpdateRequestMapper = new RequestToUpdateExchangeRateRequestMapper();
+        this.updateRequestMapper = new UpdateExchangeRateRequestMapper();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ExchangeRateServlet extends WithPatchServlet {
 
     @Override
     protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UpdateExchangeRateRequest updateRequest = requestToUpdateRequestMapper.map(req);
+        UpdateExchangeRateRequest updateRequest = updateRequestMapper.map(req);
 
         ExchangeRateDto exchangeRate = exchangeRateService.updateRateByCurrencyCodes(updateRequest);
 

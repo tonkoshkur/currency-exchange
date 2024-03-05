@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Map;
 
-public class RequestToUpdateExchangeRateRequestMapper implements RequestMapper<UpdateExchangeRateRequest> {
+public class UpdateExchangeRateRequestMapper implements RequestMapper<UpdateExchangeRateRequest> {
 
     @Override
     public UpdateExchangeRateRequest map(HttpServletRequest request) throws BadRequestException, IOException {
