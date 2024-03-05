@@ -8,7 +8,11 @@ import ua.tonkoshkur.currency.exchange.exception.NotFoundException;
 import ua.tonkoshkur.currency.exchange.exception.UnknownException;
 import ua.tonkoshkur.currency.exchange.util.ObjectMapper;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class CurrencyServiceImpl implements CurrencyService {
 
@@ -24,6 +28,14 @@ public class CurrencyServiceImpl implements CurrencyService {
     public List<CurrencyDto> findAll() {
         List<Currency> currencies = currencyDao.findAll();
         return mapper.toDto(currencies);
+    }
+
+    @Override
+    public Map<Integer, CurrencyDto> findMapByIds(Collection<Integer> ids) {
+        return currencyDao.findByIds(ids)
+                .stream()
+                .map(mapper::toDto)
+                .collect(Collectors.toMap(CurrencyDto::id, Function.identity()));
     }
 
     @Override
