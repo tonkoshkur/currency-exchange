@@ -20,21 +20,13 @@ values ('USD', 'US Dollar', '$');
 insert into Currencies (Code, FullName, Sign)
 values ('EUR', 'Euro', '€');
 insert into Currencies (Code, FullName, Sign)
-values ('GBP', 'Pound sterling', '£');
-insert into Currencies (Code, FullName, Sign)
 values ('UAH', 'Ukrainian Hryvnia', '₴');
 insert into Currencies (Code, FullName, Sign)
 values ('RUB', 'Russian Ruble', '₽');
-insert into Currencies (Code, FullName, Sign)
-values ('HUF', 'Hungarian Forint', 'Ft');
 
 insert into ExchangeRates (BaseCurrencyId, TargetCurrencyId, Rate)
 values (1, 2, 0.92);
 insert into ExchangeRates (BaseCurrencyId, TargetCurrencyId, Rate)
-values (1, 3, 0.79);
+values (1, 3, 38);
 insert into ExchangeRates (BaseCurrencyId, TargetCurrencyId, Rate)
-values (1, 4, 38);
-insert into ExchangeRates (BaseCurrencyId, TargetCurrencyId, Rate)
-values (1, 5, 91.4);
-insert into ExchangeRates (BaseCurrencyId, TargetCurrencyId, Rate)
-values (1, 6, 363.78);
+values (1, 4, 91.4);
