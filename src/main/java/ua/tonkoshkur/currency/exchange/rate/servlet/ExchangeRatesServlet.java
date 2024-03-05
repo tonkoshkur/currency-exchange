@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import ua.tonkoshkur.currency.exchange.rate.dto.ExchangeRateDto;
 import ua.tonkoshkur.currency.exchange.rate.dto.SaveExchangeRateRequest;
 import ua.tonkoshkur.currency.exchange.rate.service.ExchangeRateService;
-import ua.tonkoshkur.currency.exchange.rate.servlet.mapper.RequestToSaveExchangeRateRequestMapper;
+import ua.tonkoshkur.currency.exchange.rate.servlet.mapper.SaveExchangeRateRequestMapper;
 import ua.tonkoshkur.currency.exchange.util.BeanFactory;
 import ua.tonkoshkur.currency.exchange.util.ResponseWriter;
 
@@ -19,11 +19,11 @@ import java.util.List;
 public class ExchangeRatesServlet extends HttpServlet {
 
     private final ExchangeRateService exchangeRateService;
-    private final RequestToSaveExchangeRateRequestMapper requestToSaveRequestMapper;
+    private final SaveExchangeRateRequestMapper saveRequestMapper;
 
     public ExchangeRatesServlet() {
         this.exchangeRateService = BeanFactory.getExchangeRateService();
-        this.requestToSaveRequestMapper = new RequestToSaveExchangeRateRequestMapper();
+        this.saveRequestMapper = new SaveExchangeRateRequestMapper();
     }
 
     @Override
@@ -37,7 +37,7 @@ public class ExchangeRatesServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        SaveExchangeRateRequest saveRequest = requestToSaveRequestMapper.map(req);
+        SaveExchangeRateRequest saveRequest = saveRequestMapper.map(req);
 
         ExchangeRateDto savedExchangeRate = exchangeRateService.save(saveRequest);
 

@@ -9,7 +9,7 @@ import ua.tonkoshkur.currency.exchange.util.RequestMapper;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-public class RequestToSaveExchangeRateRequestMapper implements RequestMapper<SaveExchangeRateRequest> {
+public class SaveExchangeRateRequestMapper implements RequestMapper<SaveExchangeRateRequest> {
 
     @Override
     public SaveExchangeRateRequest map(HttpServletRequest request) throws BadRequestException, IOException {
