@@ -61,12 +61,12 @@ public class BeanFactory {
 
     private static DataSource createDataSource() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("org.sqlite.JDBC");
-        dataSource.setUrl("jdbc:sqlite::resource:currency_exchange.db");
+        dataSource.setDriverClassName(AppProperties.getDatabaseDriverClassName());
+        dataSource.setUrl(AppProperties.getDatabaseUrl());
 
-        dataSource.setMinIdle(5);
-        dataSource.setMaxIdle(10);
-        dataSource.setMaxTotal(25);
+        dataSource.setMinIdle(AppProperties.getConnectionPoolMinIdle());
+        dataSource.setMaxIdle(AppProperties.getConnectionPoolMaxIdle());
+        dataSource.setMaxTotal(AppProperties.getConnectionPoolMaxSize());
 
         return dataSource;
     }
@@ -91,7 +91,8 @@ public class BeanFactory {
     }
 
     private static ExchangeService createExchangeService() {
-        return new ExchangeServiceImpl(CURRENCY_SERVICE, EXCHANGE_RATE_SERVICE, "USD", 4);
+        return new ExchangeServiceImpl(CURRENCY_SERVICE, EXCHANGE_RATE_SERVICE, AppProperties.getDefaultCurrencyCode(),
+                AppProperties.getConvertedAmountDecimalPlaces());
     }
 
 }
