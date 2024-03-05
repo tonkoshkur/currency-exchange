@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import ua.tonkoshkur.currency.exchange.currency.dto.CurrencyDto;
 import ua.tonkoshkur.currency.exchange.currency.service.CurrencyService;
 import ua.tonkoshkur.currency.exchange.util.BeanFactory;
-import ua.tonkoshkur.currency.exchange.util.PathVariableExecutor;
+import ua.tonkoshkur.currency.exchange.util.PathVariableExtractor;
 import ua.tonkoshkur.currency.exchange.util.ResponseWriter;
 
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class CurrencyServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String code = PathVariableExecutor.execute(req.getPathInfo());
+        String code = PathVariableExtractor.extract(req.getPathInfo());
 
         CurrencyDto currency = currencyService.findByCode(code);
 
