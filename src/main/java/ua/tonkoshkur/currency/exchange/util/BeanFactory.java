@@ -9,6 +9,8 @@ import ua.tonkoshkur.currency.exchange.currency.dto.CurrencyDto;
 import ua.tonkoshkur.currency.exchange.currency.mapper.CurrencyMapper;
 import ua.tonkoshkur.currency.exchange.currency.service.CurrencyService;
 import ua.tonkoshkur.currency.exchange.currency.service.CurrencyServiceImpl;
+import ua.tonkoshkur.currency.exchange.exchange.service.ExchangeService;
+import ua.tonkoshkur.currency.exchange.exchange.service.ExchangeServiceImpl;
 import ua.tonkoshkur.currency.exchange.rate.dao.ExchangeRateDao;
 import ua.tonkoshkur.currency.exchange.rate.dao.ExchangeRateDaoImpl;
 import ua.tonkoshkur.currency.exchange.rate.dao.entity.ExchangeRate;
@@ -28,6 +30,8 @@ public class BeanFactory {
     private static final ExchangeRateService EXCHANGE_RATE_SERVICE;
     private static final ExchangeRateDao EXCHANGE_RATE_DAO;
 
+    private static final ExchangeService EXCHANGE_SERVICE;
+
     static {
         DATA_SOURCE = createDataSource();
 
@@ -37,6 +41,7 @@ public class BeanFactory {
         EXCHANGE_RATE_DAO = createExchangeRateDao();
         EXCHANGE_RATE_SERVICE = createExchangeRateService();
 
+        EXCHANGE_SERVICE = createExchangeService();
     }
 
     private BeanFactory() {
@@ -48,6 +53,10 @@ public class BeanFactory {
 
     public static ExchangeRateService getExchangeRateService() {
         return EXCHANGE_RATE_SERVICE;
+    }
+
+    public static ExchangeService getExchangeService() {
+        return EXCHANGE_SERVICE;
     }
 
     private static DataSource createDataSource() {
@@ -79,6 +88,10 @@ public class BeanFactory {
 
     private static ExchangeRateService createExchangeRateService() {
         return new ExchangeRateServiceImpl(EXCHANGE_RATE_DAO, CURRENCY_SERVICE);
+    }
+
+    private static ExchangeService createExchangeService() {
+        return new ExchangeServiceImpl(CURRENCY_SERVICE, EXCHANGE_RATE_SERVICE, "USD", 4);
     }
 
 }
