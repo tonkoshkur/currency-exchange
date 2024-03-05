@@ -1,5 +1,6 @@
 package ua.tonkoshkur.currency.exchange.util;
 
+import org.apache.commons.dbcp2.BasicDataSource;
 import ua.tonkoshkur.currency.exchange.currency.dao.CurrencyDao;
 import ua.tonkoshkur.currency.exchange.currency.dao.CurrencyDaoImpl;
 import ua.tonkoshkur.currency.exchange.currency.dao.entity.Currency;
@@ -33,7 +34,15 @@ public class BeanFactory {
     }
 
     private static DataSource createDataSource() {
-        throw new UnsupportedOperationException();
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setDriverClassName("org.sqlite.JDBC");
+        dataSource.setUrl("jdbc:sqlite::resource:currency_exchange.db");
+
+        dataSource.setMinIdle(5);
+        dataSource.setMaxIdle(10);
+        dataSource.setMaxTotal(25);
+
+        return dataSource;
     }
 
     private static CurrencyDao createCurrencyDao() {
