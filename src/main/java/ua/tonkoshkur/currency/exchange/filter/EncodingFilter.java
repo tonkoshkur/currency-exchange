@@ -9,6 +9,7 @@ import java.io.IOException;
 public class EncodingFilter implements Filter {
 
     private static final String UTF_8 = "UTF-8";
+    private static final String CONTENT_TYPE = "application/json";
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -16,6 +17,7 @@ public class EncodingFilter implements Filter {
 
         request.setCharacterEncoding(UTF_8);
         response.setCharacterEncoding(UTF_8);
+        response.setContentType(CONTENT_TYPE);
 
         chain.doFilter(request, response);
     }
