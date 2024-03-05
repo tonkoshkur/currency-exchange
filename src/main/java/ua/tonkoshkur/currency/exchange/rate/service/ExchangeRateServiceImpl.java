@@ -10,8 +10,10 @@ import ua.tonkoshkur.currency.exchange.rate.dto.ExchangeRateDto;
 import ua.tonkoshkur.currency.exchange.rate.dto.SaveExchangeRateRequest;
 import ua.tonkoshkur.currency.exchange.rate.dto.UpdateExchangeRateRequest;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -55,6 +57,12 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
         CurrencyDto targetCurrency = currencyService.findByCode(targetCurrencyCode);
 
         return findByCurrencies(baseCurrency, targetCurrency);
+    }
+
+    @Override
+    public Optional<BigDecimal> getRateByCurrencyIds(int baseCurrencyId, int targetCurrencyId) {
+        return exchangeRateDao.findByBaseAndTargetCurrencyIds(baseCurrencyId, targetCurrencyId)
+                .map(ExchangeRate::rate);
     }
 
     @Override
