@@ -54,15 +54,15 @@ public class ExchangeServiceImpl implements ExchangeService {
     private Optional<BigDecimal> getRateUsingDefaultCurrency(int baseCurrencyId, int targetCurrencyId) {
         int defaultCurrencyId = currencyService.findByCode(defaultCurrencyCode).id();
 
-        Optional<BigDecimal> baseDefaultRateOptional = exchangeRateService.getRateByCurrencyIds(baseCurrencyId, defaultCurrencyId);
-        Optional<BigDecimal> targetDefaultRateOptional = exchangeRateService.getRateByCurrencyIds(targetCurrencyId, defaultCurrencyId);
+        Optional<BigDecimal> defaultBaseRateOptional = exchangeRateService.getRateByCurrencyIds(defaultCurrencyId, baseCurrencyId);
+        Optional<BigDecimal> defaultTargetRateOptional = exchangeRateService.getRateByCurrencyIds(defaultCurrencyId, targetCurrencyId);
 
-        if (baseDefaultRateOptional.isEmpty() || targetDefaultRateOptional.isEmpty()) {
+        if (defaultBaseRateOptional.isEmpty() || defaultTargetRateOptional.isEmpty()) {
             return Optional.empty();
         }
 
-        BigDecimal baseDefaultRate = baseDefaultRateOptional.get();
-        BigDecimal targetDefaultRate = targetDefaultRateOptional.get();
+        BigDecimal baseDefaultRate = defaultBaseRateOptional.get();
+        BigDecimal targetDefaultRate = defaultTargetRateOptional.get();
 
         BigDecimal rate = targetDefaultRate.divide(baseDefaultRate, convertedAmountDecimalPlaces, RoundingMode.HALF_UP);
         return Optional.of(rate);
