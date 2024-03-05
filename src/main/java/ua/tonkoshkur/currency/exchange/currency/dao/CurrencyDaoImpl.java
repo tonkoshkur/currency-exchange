@@ -9,6 +9,8 @@ import ua.tonkoshkur.currency.exchange.util.ResultSetMapper;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +33,30 @@ public class CurrencyDaoImpl implements CurrencyDao {
              Statement statement = connection.createStatement()) {
 
             ResultSet resultSet = statement.executeQuery(sql);
+            return resultSetMapper.map(resultSet);
+
+        } catch (SQLException e) {
+            throw new DatabaseException(e);
+        }
+    }
+
+    @Override
+    public List<Currency> findByIds(Collection<Integer> ids) {
+        List<String> placeholdersList = Collections.nCopies(ids.size(), "?");
+        String placeholders = String.join(",", placeholdersList);
+        String sql = "select * from Currencies where ID in (" + placeholders + ")";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            // Sqlite jdbc driver uses jdbc4 that doesn't implement createArrayOf method
+            int index = 1;
+            for (int id : ids) {
+                statement.setInt(index++, id);
+            }
+
+            ResultSet resultSet = statement.executeQuery();
+
             return resultSetMapper.map(resultSet);
 
         } catch (SQLException e) {
